@@ -1,7 +1,9 @@
 package br.com.postechfiap.medicamentosservice.controllers;
 
-import br.com.postechfiap.fiap_estoque_service.dto.*;
-import br.com.postechfiap.fiap_estoque_service.interfaces.usecases.*;
+import br.com.postechfiap.medicamentosservice.dto.estoque.request.*;
+import br.com.postechfiap.medicamentosservice.dto.estoque.response.EstoqueResponse;
+import br.com.postechfiap.medicamentosservice.dto.estoque.response.ListaEstoqueResponse;
+import br.com.postechfiap.medicamentosservice.interfaces.usecases.estoque.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -27,7 +29,7 @@ public class EstoqueController {
     private final AdicionarEstoqueUseCase adicionarEstoque;
     private final DeletarEstoqueUseCase deletarEstoque;
 
-    // C
+
     @PostMapping
     @Operation(summary = "Cadastra estoque", description = "Cadastra novo estoque")
     public ResponseEntity<EstoqueResponse> create(@Valid @RequestBody EstoqueRequest estoqueRequest) {
@@ -41,7 +43,6 @@ public class EstoqueController {
         return ResponseEntity.created(location).body(novoEstoque);
     }
 
-    // R
     @GetMapping
     @Operation(summary = "Busca Estoque", description = "Busca Estoque por Nome")
     public ResponseEntity<ListaEstoqueResponse> buscarEstoque(@RequestParam String nome) {
@@ -54,7 +55,6 @@ public class EstoqueController {
         return  ResponseEntity.ok(listaEstoque);
     }
 
-    // U
     @PutMapping("/{sku}")
     @Operation(summary = "Atualiza o Estoque", description = "Atualiza o esto com a sku")
     public ResponseEntity<EstoqueResponse> atualizarEstoque(@PathVariable String sku,
@@ -72,7 +72,6 @@ public class EstoqueController {
         return  ResponseEntity.ok(novoEstoque);
     }
 
-
     @PutMapping("/adicionar/{sku}")
     @Operation(summary = "Adicionar o Estoque", description = "Adicionar o esto com a sku")
     public  ResponseEntity<EstoqueResponse> reduzirEstoque(@PathVariable String sku,
@@ -81,7 +80,6 @@ public class EstoqueController {
         return  ResponseEntity.ok(novoEstoque);
     }
 
-    // D
     @DeleteMapping("/{sku}")
     @Operation(summary = "Deleta um Estoque", description = "Deleta um item do estoque")
     public ResponseEntity<String> delete(@PathVariable String sku) {

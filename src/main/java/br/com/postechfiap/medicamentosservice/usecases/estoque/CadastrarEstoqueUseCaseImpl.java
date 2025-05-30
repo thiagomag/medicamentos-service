@@ -1,10 +1,10 @@
 package br.com.postechfiap.medicamentosservice.usecases.estoque;
 
-import br.com.postechfiap.fiap_estoque_service.dto.EstoqueRequest;
-import br.com.postechfiap.fiap_estoque_service.dto.EstoqueResponse;
-import br.com.postechfiap.fiap_estoque_service.entities.EstoqueEntity;
-import br.com.postechfiap.fiap_estoque_service.interfaces.EstoqueRepository;
-import br.com.postechfiap.fiap_estoque_service.interfaces.usecases.CadastrarEstoqueUseCase;
+import br.com.postechfiap.medicamentosservice.dto.estoque.request.EstoqueRequest;
+import br.com.postechfiap.medicamentosservice.dto.estoque.response.EstoqueResponse;
+import br.com.postechfiap.medicamentosservice.entities.Estoque;
+import br.com.postechfiap.medicamentosservice.interfaces.repository.EstoqueRepository;
+import br.com.postechfiap.medicamentosservice.interfaces.usecases.estoque.CadastrarEstoqueUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ public class CadastrarEstoqueUseCaseImpl implements CadastrarEstoqueUseCase {
     @Override
     public EstoqueResponse execute (EstoqueRequest entry){
         long i = 0;
-        var estoque = EstoqueEntity.builder()
+        var estoque = Estoque.builder()
                 .nome(entry.nome())
                 .sku(entry.sku())
                 .quantidade(i)

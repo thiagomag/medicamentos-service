@@ -1,9 +1,9 @@
 package br.com.postechfiap.medicamentosservice.usecases.estoque;
 
-import br.com.postechfiap.fiap_estoque_service.dto.EstoqueResponse;
-import br.com.postechfiap.fiap_estoque_service.dto.ListaEstoqueResponse;
-import br.com.postechfiap.fiap_estoque_service.interfaces.EstoqueRepository;
-import br.com.postechfiap.fiap_estoque_service.interfaces.usecases.BuscarEstoqueUseCase;
+import br.com.postechfiap.medicamentosservice.dto.estoque.response.EstoqueResponse;
+import br.com.postechfiap.medicamentosservice.dto.estoque.response.ListaEstoqueResponse;
+import br.com.postechfiap.medicamentosservice.interfaces.repository.EstoqueRepository;
+import br.com.postechfiap.medicamentosservice.interfaces.usecases.estoque.BuscarEstoqueUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
