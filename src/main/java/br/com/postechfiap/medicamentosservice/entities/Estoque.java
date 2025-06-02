@@ -19,12 +19,12 @@ public class Estoque extends BaseEntity<Long> {
     private Long id;
 
     @Setter
-    @NotBlank(message = "O nome do produto é obrigatório.")
+    @NotBlank(message = "O nome do medicamento é obrigatório.")
     @Column(nullable = false)
     private String nome;
 
     @Setter
-    @NotBlank(message = "O nome do produto é obrigatório.")
+    @NotBlank(message = "O sku do produto é obrigatório.")
     @Column(nullable = false, unique = true, updatable = false)
     private String sku;
 
