@@ -7,9 +7,9 @@ import br.com.postechfiap.medicamentosservice.utils.JsonUtils;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MEdicamentoResponseAdapter extends AbstractAdapter<Medicamento, MedicamentoResponse> {
+public class MedicamentoResponseAdapter extends AbstractAdapter<Medicamento, MedicamentoResponse> {
 
-    public MEdicamentoResponseAdapter(JsonUtils jsonUtils) {
+    public MedicamentoResponseAdapter(JsonUtils jsonUtils) {
         super(MedicamentoResponse.class, jsonUtils);
     }
 }

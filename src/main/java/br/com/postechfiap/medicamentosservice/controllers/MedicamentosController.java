@@ -2,7 +2,9 @@ package br.com.postechfiap.medicamentosservice.controllers;
 
 
 import br.com.postechfiap.medicamentosservice.dto.medicamento.request.MedicamentoRequest;
+import br.com.postechfiap.medicamentosservice.dto.medicamento.request.MedicamentoRequestParams;
 import br.com.postechfiap.medicamentosservice.dto.medicamento.response.MedicamentoResponse;
+import br.com.postechfiap.medicamentosservice.interfaces.usecases.BuscarMedicamentoUseCase;
 import br.com.postechfiap.medicamentosservice.interfaces.usecases.medicamento.AtualizarMedicamentoUseCase;
 import br.com.postechfiap.medicamentosservice.interfaces.usecases.medicamento.CadastrarMedicamentoUseCase;
 import br.com.postechfiap.medicamentosservice.interfaces.usecases.medicamento.DeletarMedicamentoUseCase;
@@ -49,15 +51,18 @@ public class MedicamentosController {
 
     @GetMapping
     @Operation(summary = "Buscar Medicamento", description = "Buscar medicamento por nome ou sku")
-    public ResponseEntity<List<MedicamentoResponse>> buscarMedicamento(@RequestParam String query) {
+    public ResponseEntity<List<MedicamentoResponse>> buscarMedicamento(@RequestParam(required = false) String nomeMedicamento,
+                                                                       @RequestParam(required = false) String sku,
+                                                                       @RequestParam(required = false) String principioAtivo,
+                                                                       @RequestParam(required = false) String laboratorio) {
+        final var requestParams = MedicamentoRequestParams.builder()
+                .nomeMedicamento(nomeMedicamento)
+                .sku(sku)
+                .principioAtivo(principioAtivo)
+                .laboratorio(laboratorio)
+                .build();
 
-        if (query == null || query.trim().isEmpty()) {
-            throw new IllegalArgumentException("O parâmetro de busca não pode estar vazio.");
-        }
-
-        var listaMedicamento = buscarMedicamentoUseCase.execute(query);
-
-        return ResponseEntity.ok(listaMedicamento);
+        return ResponseEntity.ok(buscarMedicamentoUseCase.execute(requestParams));
     }
 
     @PutMapping("/{id}")
