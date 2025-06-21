@@ -1,4 +1,4 @@
-package br.com.postechfiap.medicamentosservice.dto;
+package br.com.postechfiap.medicamentosservice.infraestructure.dto;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

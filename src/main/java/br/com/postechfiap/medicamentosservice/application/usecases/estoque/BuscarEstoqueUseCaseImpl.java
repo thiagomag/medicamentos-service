@@ -1,7 +1,8 @@
 package br.com.postechfiap.medicamentosservice.application.usecases.estoque;
 
-import br.com.postechfiap.medicamentosservice.dto.estoque.response.EstoqueResponse;
-import br.com.postechfiap.medicamentosservice.dto.estoque.response.ListaEstoqueResponse;
+import br.com.postechfiap.medicamentosservice.infraestructure.dto.estoque.response.EstoqueResponse;
+import br.com.postechfiap.medicamentosservice.infraestructure.dto.estoque.response.EstoqueResponse;
+import br.com.postechfiap.medicamentosservice.infraestructure.dto.estoque.response.ListaEstoqueResponse;
 import br.com.postechfiap.medicamentosservice.infraestructure.persistance.repository.EstoqueRepository;
 import br.com.postechfiap.medicamentosservice.application.interfaces.usecases.estoque.BuscarEstoqueUseCase;
 import lombok.RequiredArgsConstructor;

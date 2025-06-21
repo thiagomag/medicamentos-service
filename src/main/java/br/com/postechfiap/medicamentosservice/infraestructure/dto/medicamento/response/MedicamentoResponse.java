@@ -1,4 +1,4 @@
-package br.com.postechfiap.medicamentosservice.dto.medicamento.response;
+package br.com.postechfiap.medicamentosservice.infraestructure.dto.medicamento.response;
 
 public record MedicamentoResponse(
         Long id,

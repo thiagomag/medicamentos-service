@@ -1,8 +1,8 @@
 package br.com.postechfiap.medicamentosservice.application.usecases.estoque;
 
-import br.com.postechfiap.medicamentosservice.dto.estoque.request.EstoqueRequest;
-import br.com.postechfiap.medicamentosservice.dto.estoque.response.EstoqueResponse;
-import br.com.postechfiap.medicamentosservice.domain.entities.Estoque;
+import br.com.postechfiap.medicamentosservice.infraestructure.dto.estoque.request.EstoqueRequest;
+import br.com.postechfiap.medicamentosservice.infraestructure.dto.estoque.response.EstoqueResponse;
+import br.com.postechfiap.medicamentosservice.infraestructure.persistance.entities.EstoqueEntity;
 import br.com.postechfiap.medicamentosservice.infraestructure.persistance.repository.EstoqueRepository;
 import br.com.postechfiap.medicamentosservice.application.interfaces.usecases.estoque.CadastrarEstoqueUseCase;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ public class CadastrarEstoqueUseCaseImpl implements CadastrarEstoqueUseCase {
     @Override
     public EstoqueResponse execute (EstoqueRequest entry){
         long i = 0;
-        var estoque = Estoque.builder()
+        var estoque = EstoqueEntity.builder()
                 .nome(entry.nome())
                 .sku(entry.sku())
                 .quantidade(i)

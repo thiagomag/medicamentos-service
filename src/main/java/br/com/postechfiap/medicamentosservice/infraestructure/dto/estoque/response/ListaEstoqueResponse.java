@@ -1,4 +1,4 @@
-package br.com.postechfiap.medicamentosservice.dto.estoque.response;
+package br.com.postechfiap.medicamentosservice.infraestructure.dto.estoque.response;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;

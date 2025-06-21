@@ -1,17 +1,22 @@
-package br.com.postechfiap.medicamentosservice.domain.entities;
+package br.com.postechfiap.medicamentosservice.infraestructure.persistance.entities;
 
-import br.com.postechfiap.medicamentosservice.infraestructure.persistance.entities.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class Medicamento  {
+@EqualsAndHashCode(callSuper = false)
+@ToString
+@Builder(toBuilder = true)
+@Table(name = "medicamento")
+@Entity
+public class MedicamentoEntity extends BaseEntity<Long> {
 
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator", sequenceName = "estoque_id_seq",allocationSize = 1)
     private Long id;
     private String sku;
     private String nome;

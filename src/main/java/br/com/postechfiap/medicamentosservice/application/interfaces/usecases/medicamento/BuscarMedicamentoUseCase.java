@@ -1,7 +1,7 @@
-package br.com.postechfiap.medicamentosservice.application.interfaces.usecases;
+package br.com.postechfiap.medicamentosservice.application.interfaces.usecases.medicamento;
 
 import br.com.postechfiap.medicamentosservice.infraestructure.dto.medicamento.request.MedicamentoRequestParams;
-import br.com.postechfiap.medicamentosservice.dto.medicamento.response.MedicamentoResponse;
+import br.com.postechfiap.medicamentosservice.infraestructure.dto.medicamento.response.MedicamentoResponse;
 import br.com.postechfiap.medicamentosservice.application.interfaces.UseCase;
 
 import java.util.List;

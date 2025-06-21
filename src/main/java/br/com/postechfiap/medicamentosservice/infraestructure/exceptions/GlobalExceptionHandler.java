@@ -1,6 +1,6 @@
 package br.com.postechfiap.medicamentosservice.infraestructure.exceptions;
 
-import br.com.postechfiap.medicamentosservice.dto.ResponseError;
+import br.com.postechfiap.medicamentosservice.infraestructure.dto.ResponseError;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

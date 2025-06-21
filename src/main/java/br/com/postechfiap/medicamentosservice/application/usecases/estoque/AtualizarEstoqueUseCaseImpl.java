@@ -1,7 +1,7 @@
 package br.com.postechfiap.medicamentosservice.application.usecases.estoque;
 
-import br.com.postechfiap.medicamentosservice.dto.estoque.request.AtualizarEstoqueDto;
-import br.com.postechfiap.medicamentosservice.dto.estoque.response.EstoqueResponse;
+import br.com.postechfiap.medicamentosservice.infraestructure.dto.estoque.request.AtualizarEstoqueDto;
+import br.com.postechfiap.medicamentosservice.infraestructure.dto.estoque.response.EstoqueResponse;
 import br.com.postechfiap.medicamentosservice.infraestructure.exceptions.estoque.EstoqueNotFoundException;
 import br.com.postechfiap.medicamentosservice.infraestructure.persistance.repository.EstoqueRepository;
 import br.com.postechfiap.medicamentosservice.application.interfaces.usecases.estoque.AtualizarEstoqueUseCase;

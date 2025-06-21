@@ -1,4 +1,4 @@
-package br.com.postechfiap.medicamentosservice.dto.medicamento.request;
+package br.com.postechfiap.medicamentosservice.infraestructure.dto.medicamento.request;
 
 public record MedicamentoRequest(
         String nome,

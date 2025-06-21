@@ -1,8 +1,9 @@
 package br.com.postechfiap.medicamentosservice.infraestructure.controllers;
 
 import br.com.postechfiap.medicamentosservice.application.interfaces.usecases.estoque.*;
-import br.com.postechfiap.medicamentosservice.dto.estoque.response.EstoqueResponse;
-import br.com.postechfiap.medicamentosservice.dto.estoque.response.ListaEstoqueResponse;
+import br.com.postechfiap.medicamentosservice.infraestructure.dto.estoque.request.*;
+import br.com.postechfiap.medicamentosservice.infraestructure.dto.estoque.response.EstoqueResponse;
+import br.com.postechfiap.medicamentosservice.infraestructure.dto.estoque.response.ListaEstoqueResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

@@ -1,4 +1,4 @@
-package br.com.postechfiap.medicamentosservice.domain.entities;
+package br.com.postechfiap.medicamentosservice.infraestructure.persistance.entities;
 
 
 import br.com.postechfiap.medicamentosservice.application.interfaces.Entity;
