@@ -1,12 +1,21 @@
 package br.com.postechfiap.medicamentosservice.infraestructure.dto.medicamento.response;
 
-public record MedicamentoResponse(
-        Long id,
-        String nome,
-        String principioAtivo,
-        String laboratorio,
-        String dosagem,
-        String descricao,
-        Double preco,
-        Integer quantidadeEmEstoque) {
+import lombok.*;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class MedicamentoResponse {
+
+    private  Long id;
+    private  String sku;
+    private  String nome;
+    private  String principioAtivo;
+    private  String laboratorio;
+    private  String dosagem;
+    private  String descricao;
+    private  Double preco;
+    private int estoque;
 }

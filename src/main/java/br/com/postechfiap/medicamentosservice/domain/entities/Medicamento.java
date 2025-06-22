@@ -20,7 +20,7 @@ public class Medicamento  {
     private String dosagem;
     private String descricao;
     private Double preco;
-    private Integer quantidadeEmEstoque;
+
 
 
     public void gerarSku() {

@@ -16,7 +16,8 @@ public class DeletarEstoqueUseCaseImpl implements DeletarEstoqueUseCase {
         var estoque =estoqueRepository.findBySku(sku)
                 .orElseThrow(EstoqueNotFoundException::new);
 
-        estoqueRepository.delete(estoque);
-        return "Estoque com sku " + sku + " foi deletado com sucesso!";
+        estoque.delete();
+        estoqueRepository.save(estoque);
+        return sku;
     }
 }

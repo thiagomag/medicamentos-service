@@ -20,6 +20,6 @@ public class DeletarMedicamentoUseCaseImpl implements DeletarMedicamentoUseCase 
                 .orElseThrow(MedicamentoNotFoundException::new);
         medicamentoDb.delete();
         medicamentoRepository.save(medicamentoDb);
-        return "Medicamento deletado com sucesso!";
+        return medicamentoDb.getSku();
     }
 }

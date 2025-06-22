@@ -14,8 +14,8 @@ import lombok.*;
 @Entity
 public class EstoqueEntity extends BaseEntity<Long> {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator", sequenceName = "estoque_id_seq",allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "estoque_seq_generator")
+    @SequenceGenerator(name = "estoque_seq_generator", sequenceName = "estoque_id_seq", allocationSize = 1)
     private Long id;
 
     @Setter
@@ -30,6 +30,6 @@ public class EstoqueEntity extends BaseEntity<Long> {
 
     @Setter
     @Column(nullable = false)
-    private Long quantidade;
+    private int quantidade;
 
 }

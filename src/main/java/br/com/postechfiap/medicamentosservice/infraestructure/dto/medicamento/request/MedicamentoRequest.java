@@ -7,6 +7,6 @@ public record MedicamentoRequest(
         String dosagem,
         String descricao,
         Double preco,
-        Integer quantidadeEmEstoque
+        int quantidadeEmEstoque
 ) {
 }

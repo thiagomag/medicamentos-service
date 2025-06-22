@@ -10,6 +10,6 @@ import jakarta.validation.constraints.NotBlank;
 public record EstoqueRequest(
         @NotBlank String nome,
         @NotBlank String sku,
-        Long quantidade
+        @NotBlank int estoque
         ) {
 }

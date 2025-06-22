@@ -12,6 +12,6 @@ public class Estoque  {
     private Long id;
     private String nome;
     private String sku;
-    private Long quantidade;
+    private int quantidade;
 
 }

@@ -20,7 +20,8 @@ public class AdicionarEstoqueUseCaseImpl implements AdicionarEstoqueUseCase {
         var estoque = estoqueRepository.findBySku(entry.sku())
                 .orElseThrow(EstoqueNotFoundException::new);
 
-        long quantidade= estoque.getQuantidade() + entry.adicionarEstoqueRequest().quantidade();
+        int quantidade= estoque.getQuantidade() + entry.adicionarEstoqueRequest().quantidade();
+
         estoque.setQuantidade(quantidade);
 
         estoqueRepository.save(estoque);

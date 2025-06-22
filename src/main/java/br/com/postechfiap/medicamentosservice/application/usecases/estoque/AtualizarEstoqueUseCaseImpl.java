@@ -22,7 +22,7 @@ public class AtualizarEstoqueUseCaseImpl implements AtualizarEstoqueUseCase {
 
         estoque.setNome(entry.estoqueRequest().nome());
         estoque.setSku(entry.estoqueRequest().sku());
-        estoque.setQuantidade(entry.estoqueRequest().quantidade());
+        estoque.setQuantidade(entry.estoqueRequest().estoque());
 
         estoque = estoqueRepository.save(estoque);
 

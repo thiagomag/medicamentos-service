@@ -30,18 +30,18 @@ public class EstoqueController {
     private final DeletarEstoqueUseCase deletarEstoque;
 
 
-    @PostMapping
-    @Operation(summary = "Cadastra estoque", description = "Cadastra novo estoque")
-    public ResponseEntity<EstoqueResponse> create(@Valid @RequestBody EstoqueRequest estoqueRequest) {
-        var novoEstoque = cadastrarEstoque.execute(estoqueRequest);
-
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(novoEstoque.id())
-                .toUri();
-        return ResponseEntity.created(location).body(novoEstoque);
-    }
+//    @PostMapping
+//    @Operation(summary = "Cadastra estoque", description = "Cadastra novo estoque")
+//    public ResponseEntity<EstoqueResponse> create(@Valid @RequestBody EstoqueRequest estoqueRequest) {
+//        var novoEstoque = cadastrarEstoque.execute(estoqueRequest);
+//
+//        URI location = ServletUriComponentsBuilder
+//                .fromCurrentRequest()
+//                .path("/{id}")
+//                .buildAndExpand(novoEstoque.id())
+//                .toUri();
+//        return ResponseEntity.created(location).body(novoEstoque);
+//    }
 
     @GetMapping
     @Operation(summary = "Busca Estoque", description = "Busca Estoque por Nome")

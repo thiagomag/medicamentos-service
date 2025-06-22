@@ -10,8 +10,11 @@ spring:
     jpa:
       show-sql: true
       hibernate:
-        generate-ddl: true
-        ddl-auto: update
+        ddl-auto: none
+      flyway:
+        enabled: true
+        locations: classpath:db/migration
+        ignore-unknown-database: true
 
 server:
   port: 8082

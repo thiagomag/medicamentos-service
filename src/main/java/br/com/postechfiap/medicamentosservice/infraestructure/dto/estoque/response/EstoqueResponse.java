@@ -4,6 +4,6 @@ public record EstoqueResponse(
         Long id,
         String nome,
         String sku,
-        Long quantidade
+        int quantidade
 ) {
 }

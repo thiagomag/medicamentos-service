@@ -2,10 +2,14 @@ package br.com.postechfiap.medicamentosservice.infraestructure.controllers;
 
 
 
+import br.com.postechfiap.medicamentosservice.application.interfaces.usecases.estoque.CadastrarEstoqueUseCase;
+import br.com.postechfiap.medicamentosservice.application.interfaces.usecases.estoque.DeletarEstoqueUseCase;
 import br.com.postechfiap.medicamentosservice.application.interfaces.usecases.medicamento.BuscarMedicamentoUseCase;
 import br.com.postechfiap.medicamentosservice.application.interfaces.usecases.medicamento.AtualizarMedicamentoUseCase;
 import br.com.postechfiap.medicamentosservice.application.interfaces.usecases.medicamento.CadastrarMedicamentoUseCase;
 import br.com.postechfiap.medicamentosservice.application.interfaces.usecases.medicamento.DeletarMedicamentoUseCase;
+import br.com.postechfiap.medicamentosservice.domain.entities.Estoque;
+import br.com.postechfiap.medicamentosservice.infraestructure.dto.estoque.request.EstoqueRequest;
 import br.com.postechfiap.medicamentosservice.infraestructure.dto.medicamento.request.MedicamentoRequest;
 import br.com.postechfiap.medicamentosservice.infraestructure.dto.medicamento.request.MedicamentoRequestParams;
 import br.com.postechfiap.medicamentosservice.infraestructure.dto.medicamento.response.MedicamentoResponse;
@@ -23,7 +27,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/medicamento")
+@RequestMapping(value = "/medicamentos")
 @RequiredArgsConstructor
 @Validated
 @Tag(name = "Medicamento", description = "API para gerenciar medicamentos")
@@ -33,18 +37,27 @@ public class MedicamentosController {
     private final BuscarMedicamentoUseCase buscarMedicamentoUseCase;
     private final AtualizarMedicamentoUseCase atualizarMedicamentoUseCase;
     private final DeletarMedicamentoUseCase deletarMedicamentoUseCase;
-
+    private final CadastrarEstoqueUseCase cadastrarEstoqueUseCase;
+    private final DeletarEstoqueUseCase deletarEstoqueUseCase;
 
     @PostMapping
-    @Operation(summary = "Cadastrar Medicamento", description = "Cadastra novos medicamentos.")
+    @Operation(summary = "Cadastrar Medicamento e Criar Estoque", description = "Cadastra novos medicamentos e estoque.")
     public ResponseEntity<MedicamentoResponse> cadastrarNovoMedicamento(@RequestBody @Valid MedicamentoRequest dto) {
 
+        // Cadastra Medicamento
         var novoProduto = cadastrarMedicamentoUseCase.execute(dto);
+
+        EstoqueRequest estoqueRequest = new EstoqueRequest(novoProduto.getNome(), novoProduto.getSku(),
+                novoProduto.getEstoque());
+
+        var novoEstoque = cadastrarEstoqueUseCase.execute(estoqueRequest);
+
+        novoProduto.setEstoque(novoEstoque.quantidade());
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(novoProduto.id())
+                .buildAndExpand(novoProduto.getId())
                 .toUri();
 
         return ResponseEntity.created(location).body(novoProduto);
@@ -76,10 +89,19 @@ public class MedicamentosController {
         return ResponseEntity.ok(medicamento);
     }
 
+
+
     @DeleteMapping("/{id}")
     @Operation(summary = "Deletar Medicamento", description = "Remove um medicamento pelo ID e retorna uma mensagem de confirmação.")
     public ResponseEntity<String> deletarMedicamento(@PathVariable Long id) {
-        String mensagem = deletarMedicamentoUseCase.execute(id);
-        return ResponseEntity.ok(mensagem);
+
+        String skuDeletado = deletarMedicamentoUseCase.execute(id);
+
+        deletarEstoqueUseCase.execute(skuDeletado);
+
+        return ResponseEntity.ok("Estoque com sku " + skuDeletado + " foi deletado com sucesso!");
     }
+
+
+
 }

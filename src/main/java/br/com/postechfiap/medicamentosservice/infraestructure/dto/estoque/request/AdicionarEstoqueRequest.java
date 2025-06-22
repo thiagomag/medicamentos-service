@@ -9,6 +9,6 @@ import jakarta.validation.constraints.NotBlank;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public record AdicionarEstoqueRequest(
         @NotBlank String sku,
-        Long quantidade
+        int quantidade
         ) {
 }

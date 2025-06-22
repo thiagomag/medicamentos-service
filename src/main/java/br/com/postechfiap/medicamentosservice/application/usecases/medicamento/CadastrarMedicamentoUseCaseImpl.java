@@ -4,6 +4,7 @@ import br.com.postechfiap.medicamentosservice.infraestructure.adapter.medicament
 import br.com.postechfiap.medicamentosservice.infraestructure.adapter.medicamento.MedicamentoAdapter;
 import br.com.postechfiap.medicamentosservice.infraestructure.dto.medicamento.request.MedicamentoRequest;
 import br.com.postechfiap.medicamentosservice.infraestructure.dto.medicamento.response.MedicamentoResponse;
+import br.com.postechfiap.medicamentosservice.infraestructure.persistance.entities.MedicamentoEntity;
 import br.com.postechfiap.medicamentosservice.infraestructure.persistance.repository.MedicamentoRepository;
 import br.com.postechfiap.medicamentosservice.application.interfaces.usecases.medicamento.CadastrarMedicamentoUseCase;
 import lombok.RequiredArgsConstructor;
@@ -20,11 +21,20 @@ public class CadastrarMedicamentoUseCaseImpl implements CadastrarMedicamentoUseC
     private final MedicamentoRepository medicamentoRepository;
 
     @Override
-    public MedicamentoResponse execute(MedicamentoRequest medicamentoRequest) {
-        final var medicamento = medicamentoAdapter.adapt(medicamentoRequest);
-        medicamento.gerarSku();
-        final var medicamentoSalvo = medicamentoRepository.save(medicamento);
+    public MedicamentoResponse execute(MedicamentoRequest request) {
+        var medicamento = MedicamentoEntity.builder().nome(request.nome()).principioAtivo(request.principioAtivo())
+                .laboratorio(request.laboratorio()).dosagem(request.dosagem())
+                .descricao(request.descricao()).preco(request.preco()).build();
 
-        return medicamentoResponseAdapter.adapt(medicamentoSalvo);
+        medicamento.gerarSku();
+
+        final var medicamentoSalvo = medicamentoRepository.save(medicamento);
+        // Transforma Entity em DTO response
+        MedicamentoResponse response = medicamentoResponseAdapter.adapt(medicamentoSalvo);
+
+        response.setEstoque(request.quantidadeEmEstoque());
+
+
+        return response;
     }
 }

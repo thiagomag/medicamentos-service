@@ -15,8 +15,8 @@ import lombok.*;
 public class MedicamentoEntity extends BaseEntity<Long> {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator", sequenceName = "estoque_id_seq",allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "medicamento_gen")
+    @SequenceGenerator(name = "medicamento_gen", sequenceName = "medicamentos_id_seq", allocationSize = 1)
     private Long id;
     private String sku;
     private String nome;
@@ -25,7 +25,7 @@ public class MedicamentoEntity extends BaseEntity<Long> {
     private String dosagem;
     private String descricao;
     private Double preco;
-    private Integer quantidadeEmEstoque;
+
 
 
     public void gerarSku() {

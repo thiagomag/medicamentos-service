@@ -16,11 +16,11 @@ public class CadastrarEstoqueUseCaseImpl implements CadastrarEstoqueUseCase {
 
     @Override
     public EstoqueResponse execute (EstoqueRequest entry){
-        long i = 0;
+
         var estoque = EstoqueEntity.builder()
                 .nome(entry.nome())
                 .sku(entry.sku())
-                .quantidade(i)
+                .quantidade(entry.estoque())
                 .build();
 
         estoque = estoqueRepository.save(estoque);

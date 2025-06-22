@@ -19,7 +19,7 @@ public class ReduzirEstoqueUseCaseImpl implements ReduzirEstoqueUseCase {
 
         var estoque = estoqueRepository.findBySku(entry.sku())
                 .orElseThrow(EstoqueNotFoundException::new);
-        long quantidade= estoque.getQuantidade() - entry.reduzirEstoqueRequest().quantidade();
+        int quantidade= estoque.getQuantidade() - entry.reduzirEstoqueRequest().quantidade();
         estoque.setQuantidade(quantidade);
 
         estoqueRepository.save(estoque);
