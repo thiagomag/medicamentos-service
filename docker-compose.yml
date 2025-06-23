@@ -1,8 +1,7 @@
-version: '3.8'
 
 services:
   postgres:
-    image: postgres:15-alpine
+    image: postgres:16-alpine
     container_name: postgres-db
     environment:
       POSTGRES_DB: medicamentos
@@ -10,8 +9,6 @@ services:
       POSTGRES_PASSWORD: postgres
     ports:
       - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
     networks:
       - app-network
 
@@ -31,7 +28,7 @@ services:
       DATABASE_USERNAME: postgres
       DATABASE_PASSWORD: postgres
     depends_on:
-      - db
+      - postgres
     networks:
       - app-network
 
