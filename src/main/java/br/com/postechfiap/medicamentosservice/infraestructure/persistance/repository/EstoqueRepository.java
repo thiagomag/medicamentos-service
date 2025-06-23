@@ -12,4 +12,5 @@ public interface EstoqueRepository extends JpaRepository<EstoqueEntity, Long> {
     List<EstoqueEntity> findByNomeContainingIgnoreCase(String nome);
     Optional<EstoqueEntity> findBySku(String sku);
     List<EstoqueEntity> findByNomeContainingIgnoreCaseOrSkuIgnoreCase(String nome, String sku);
+    List<EstoqueEntity> findByQuantidadeLessThan(int quantidade);
 }
