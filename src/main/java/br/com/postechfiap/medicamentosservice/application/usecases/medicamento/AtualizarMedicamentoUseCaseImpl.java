@@ -2,6 +2,7 @@ package br.com.postechfiap.medicamentosservice.application.usecases.medicamento;
 
 import br.com.postechfiap.medicamentosservice.infraestructure.adapter.medicamento.MedicamentoResponseAdapter;
 import br.com.postechfiap.medicamentosservice.infraestructure.adapter.medicamento.MedicamentoAdapter;
+import br.com.postechfiap.medicamentosservice.infraestructure.dto.medicamento.request.AtualizaMedicamentoRequest;
 import br.com.postechfiap.medicamentosservice.infraestructure.dto.medicamento.request.MedicamentoRequest;
 import br.com.postechfiap.medicamentosservice.infraestructure.dto.medicamento.response.MedicamentoResponse;
 import br.com.postechfiap.medicamentosservice.infraestructure.exceptions.medicamento.MedicamentoNotFoundException;
@@ -23,16 +24,28 @@ public class AtualizarMedicamentoUseCaseImpl implements AtualizarMedicamentoUseC
     private final MedicamentoRepository medicamentoRepository;
 
     @Override
-    public MedicamentoResponse execute(Tuple<MedicamentoRequest, Long> medicamentoRequestLongTuple) {
+    public Tuple<MedicamentoResponse,String> execute(Tuple<AtualizaMedicamentoRequest, Long> medicamentoRequestLongTuple) {
         final var request = medicamentoRequestLongTuple._1();
         final var medicamentoId = medicamentoRequestLongTuple._2();
         final var medicamentoDb = medicamentoRepository.findById(medicamentoId)
                 .orElseThrow(MedicamentoNotFoundException::new);
-        //final var medicamento = medicamentoAdapter.adapt(medicamentoRequest, medicamentoDb);
+
+        final String skuAntigo = medicamentoDb.getSku();
+        System.out.println("Medicamento DB SKU ANTIGO! : " + skuAntigo);
+        System.out.println("Medicamento DB Objeto : " + medicamentoDb);
+
         final var medicamentoAtualizado = MedicamentoEntity.builder().id(medicamentoId).nome(request.nome())
                 .principioAtivo(request.principioAtivo()).laboratorio(request.laboratorio())
                 .dosagem(request.dosagem()).descricao(request.descricao()).preco(request.preco()).build();
         medicamentoAtualizado.gerarSku();
-        return medicamentoResponseAdapter.adapt(medicamentoAtualizado);
+
+        medicamentoRepository.save(medicamentoAtualizado);
+        var response =  medicamentoResponseAdapter.adapt(medicamentoAtualizado);
+
+
+        System.out.println("Medicamento DB SKU ANTIGO! Antes do Retorno : " + skuAntigo);
+        System.out.println("SKU NOVO : " + response.getSku());
+        
+        return new Tuple<>(response, skuAntigo);
     }
 }

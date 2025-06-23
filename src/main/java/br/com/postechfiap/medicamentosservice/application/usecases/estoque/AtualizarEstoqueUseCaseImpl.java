@@ -7,6 +7,7 @@ import br.com.postechfiap.medicamentosservice.infraestructure.persistance.reposi
 import br.com.postechfiap.medicamentosservice.application.interfaces.usecases.estoque.AtualizarEstoqueUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -14,17 +15,18 @@ public class AtualizarEstoqueUseCaseImpl implements AtualizarEstoqueUseCase {
 
     private  final EstoqueRepository estoqueRepository;
 
+    @Transactional
     @Override
     public EstoqueResponse execute (AtualizarEstoqueDto entry){
 
-        var estoque = estoqueRepository.findBySku(entry.sku())
+        var estoque = estoqueRepository.findBySku(entry.skuAntigo())
                 .orElseThrow(EstoqueNotFoundException::new);
 
-        estoque.setNome(entry.estoqueRequest().nome());
-        estoque.setSku(entry.estoqueRequest().sku());
-        estoque.setQuantidade(entry.estoqueRequest().estoque());
+        estoque.setNome(entry.nome());
+        estoque.setSku(entry.skuNovo());
+        //estoque.setQuantidade(entry.estoqueRequest().estoque());
 
-        estoque = estoqueRepository.save(estoque);
+        estoqueRepository.save(estoque);
 
         return  new EstoqueResponse(
                 estoque.getId(),

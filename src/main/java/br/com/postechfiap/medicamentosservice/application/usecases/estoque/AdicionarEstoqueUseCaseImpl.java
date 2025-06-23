@@ -1,6 +1,6 @@
 package br.com.postechfiap.medicamentosservice.application.usecases.estoque;
 
-import br.com.postechfiap.medicamentosservice.infraestructure.dto.estoque.request.AdicionarEstoqueDto;
+import br.com.postechfiap.medicamentosservice.infraestructure.dto.estoque.request.AlterarEstoqueRequest;
 import br.com.postechfiap.medicamentosservice.infraestructure.dto.estoque.response.EstoqueResponse;
 import br.com.postechfiap.medicamentosservice.infraestructure.exceptions.estoque.EstoqueNotFoundException;
 import br.com.postechfiap.medicamentosservice.infraestructure.persistance.repository.EstoqueRepository;
@@ -15,12 +15,12 @@ public class AdicionarEstoqueUseCaseImpl implements AdicionarEstoqueUseCase {
     private final EstoqueRepository estoqueRepository;
 
     @Override
-    public EstoqueResponse execute (AdicionarEstoqueDto entry){
+    public EstoqueResponse execute (AlterarEstoqueRequest entry){
 
         var estoque = estoqueRepository.findBySku(entry.sku())
                 .orElseThrow(EstoqueNotFoundException::new);
 
-        int quantidade= estoque.getQuantidade() + entry.adicionarEstoqueRequest().quantidade();
+        int quantidade= estoque.getQuantidade() + entry.quantidade();
 
         estoque.setQuantidade(quantidade);
 

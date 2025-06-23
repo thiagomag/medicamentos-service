@@ -25,7 +25,7 @@ public class EstoqueEntity extends BaseEntity<Long> {
 
     @Setter
     @NotBlank(message = "O sku do produto é obrigatório.")
-    @Column(nullable = false, unique = true, updatable = false)
+    @Column(nullable = false, unique = true, updatable = true)
     private String sku;
 
     @Setter

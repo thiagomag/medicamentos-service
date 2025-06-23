@@ -1,7 +1,8 @@
 package br.com.postechfiap.medicamentosservice.application.usecases.estoque;
 
+import br.com.postechfiap.medicamentosservice.infraestructure.dto.estoque.request.AlterarEstoqueRequest;
 import br.com.postechfiap.medicamentosservice.infraestructure.dto.estoque.response.EstoqueResponse;
-import br.com.postechfiap.medicamentosservice.infraestructure.dto.estoque.request.ReduzirEstoqueDto;
+import br.com.postechfiap.medicamentosservice.infraestructure.exceptions.estoque.EstoqueInsuficienteException;
 import br.com.postechfiap.medicamentosservice.infraestructure.exceptions.estoque.EstoqueNotFoundException;
 import br.com.postechfiap.medicamentosservice.infraestructure.persistance.repository.EstoqueRepository;
 import br.com.postechfiap.medicamentosservice.application.interfaces.usecases.estoque.ReduzirEstoqueUseCase;
@@ -15,11 +16,17 @@ public class ReduzirEstoqueUseCaseImpl implements ReduzirEstoqueUseCase {
     private final EstoqueRepository estoqueRepository;
 
     @Override
-    public EstoqueResponse execute (ReduzirEstoqueDto entry){
+    public EstoqueResponse execute (AlterarEstoqueRequest entry){
 
         var estoque = estoqueRepository.findBySku(entry.sku())
                 .orElseThrow(EstoqueNotFoundException::new);
-        int quantidade= estoque.getQuantidade() - entry.reduzirEstoqueRequest().quantidade();
+
+        if(estoque.getQuantidade() < entry.quantidade()){
+            throw new EstoqueInsuficienteException("Estoque de Remoção ultrapassa o estoque atual de: "
+                    + estoque.getQuantidade());
+        }
+
+        int quantidade= estoque.getQuantidade() - entry.quantidade();
         estoque.setQuantidade(quantidade);
 
         estoqueRepository.save(estoque);

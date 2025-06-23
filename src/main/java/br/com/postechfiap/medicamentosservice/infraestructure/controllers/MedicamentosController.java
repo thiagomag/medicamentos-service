@@ -2,14 +2,18 @@ package br.com.postechfiap.medicamentosservice.infraestructure.controllers;
 
 
 
+import br.com.postechfiap.medicamentosservice.application.interfaces.usecases.estoque.AtualizarEstoqueUseCase;
+import br.com.postechfiap.medicamentosservice.application.interfaces.usecases.estoque.BuscarEstoquePorSkuUseCase;
 import br.com.postechfiap.medicamentosservice.application.interfaces.usecases.estoque.CadastrarEstoqueUseCase;
 import br.com.postechfiap.medicamentosservice.application.interfaces.usecases.estoque.DeletarEstoqueUseCase;
 import br.com.postechfiap.medicamentosservice.application.interfaces.usecases.medicamento.BuscarMedicamentoUseCase;
 import br.com.postechfiap.medicamentosservice.application.interfaces.usecases.medicamento.AtualizarMedicamentoUseCase;
 import br.com.postechfiap.medicamentosservice.application.interfaces.usecases.medicamento.CadastrarMedicamentoUseCase;
 import br.com.postechfiap.medicamentosservice.application.interfaces.usecases.medicamento.DeletarMedicamentoUseCase;
-import br.com.postechfiap.medicamentosservice.domain.entities.Estoque;
+import br.com.postechfiap.medicamentosservice.infraestructure.dto.estoque.request.AtualizarEstoqueDto;
 import br.com.postechfiap.medicamentosservice.infraestructure.dto.estoque.request.EstoqueRequest;
+import br.com.postechfiap.medicamentosservice.infraestructure.dto.estoque.response.EstoqueResponse;
+import br.com.postechfiap.medicamentosservice.infraestructure.dto.medicamento.request.AtualizaMedicamentoRequest;
 import br.com.postechfiap.medicamentosservice.infraestructure.dto.medicamento.request.MedicamentoRequest;
 import br.com.postechfiap.medicamentosservice.infraestructure.dto.medicamento.request.MedicamentoRequestParams;
 import br.com.postechfiap.medicamentosservice.infraestructure.dto.medicamento.response.MedicamentoResponse;
@@ -39,6 +43,8 @@ public class MedicamentosController {
     private final DeletarMedicamentoUseCase deletarMedicamentoUseCase;
     private final CadastrarEstoqueUseCase cadastrarEstoqueUseCase;
     private final DeletarEstoqueUseCase deletarEstoqueUseCase;
+    private final AtualizarEstoqueUseCase atualizarEstoqueUseCase;
+    private final BuscarEstoquePorSkuUseCase buscarEstoqueUseCase;
 
     @PostMapping
     @Operation(summary = "Cadastrar Medicamento e Criar Estoque", description = "Cadastra novos medicamentos e estoque.")
@@ -76,17 +82,44 @@ public class MedicamentosController {
                 .laboratorio(laboratorio)
                 .build();
 
-        return ResponseEntity.ok(buscarMedicamentoUseCase.execute(requestParams));
+        var medicamentoBuscado = buscarMedicamentoUseCase.execute(requestParams);
+
+        var medicamentosComEstoque = medicamentoBuscado.stream()
+                .map(medicamento -> {
+
+                    EstoqueResponse estoqueResponse = buscarEstoqueUseCase.execute(medicamento.getSku())
+                            .estoques().get(0);
+
+                    // 2. Atualiza o campo 'estoque' no objeto MedicamentoResponse
+                    medicamento.setEstoque(estoqueResponse.quantidade());
+
+                    // 3. Retorna o MedicamentoResponse modificado
+                    return medicamento;
+                })
+                .toList();
+
+
+
+
+        return ResponseEntity.ok(medicamentosComEstoque);
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Atualizar Medicamento", description = "Atualizar um medicamento")
     public ResponseEntity<MedicamentoResponse> atualizarMedicamento(@PathVariable Long id,
-                                                                    @Valid @RequestBody MedicamentoRequest request) {
+                                                                    @Valid @RequestBody AtualizaMedicamentoRequest request) {
 
         var medicamento = atualizarMedicamentoUseCase.execute(new Tuple<>(request, id));
 
-        return ResponseEntity.ok(medicamento);
+        AtualizarEstoqueDto atualizarEstoque = new AtualizarEstoqueDto(medicamento._2(),
+                medicamento._1().getNome(),medicamento._1().getSku());
+
+        System.out.println("Atualizar Estoque DTO: " + atualizarEstoque);
+
+        atualizarEstoqueUseCase.execute(atualizarEstoque);
+
+
+        return ResponseEntity.ok(medicamento._1());
     }
 
 

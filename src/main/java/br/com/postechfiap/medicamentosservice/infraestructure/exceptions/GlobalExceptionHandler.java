@@ -1,6 +1,7 @@
 package br.com.postechfiap.medicamentosservice.infraestructure.exceptions;
 
 import br.com.postechfiap.medicamentosservice.infraestructure.dto.ResponseError;
+import br.com.postechfiap.medicamentosservice.infraestructure.exceptions.estoque.EstoqueInsuficienteException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,17 @@ public class GlobalExceptionHandler {
                 ex.getMessage()
         );
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+
+    @ExceptionHandler(EstoqueInsuficienteException.class)
+    public ResponseEntity<ResponseError> handleEstoqueInsuficienteException(EstoqueInsuficienteException ex) {
+        ResponseError errorResponse = new ResponseError(
+                HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                ex.getMessage()
+        );
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(ConflictException.class)
