@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface MedicamentoRepository extends JpaRepository<MedicamentoEntity, Long> {
@@ -20,4 +21,6 @@ public interface MedicamentoRepository extends JpaRepository<MedicamentoEntity, 
                                                 @Param("sku") String sku,
                                                 @Param("principioAtivo") String principioAtivo,
                                                 @Param("laboratorio") String laboratorio);
+
+    Optional<MedicamentoEntity> findBySku(String sku);
 }
