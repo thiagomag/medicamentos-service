@@ -31,8 +31,6 @@ public class EstoqueAlertaUtils {
                     if (medicamentoOptional.isPresent()) {
                         laboratorio = medicamentoOptional.get().getLaboratorio();
                     }
-                    ;
-
 
                     // Constrói e retorna o DTO
                     return EstoqueAlertaDTO.builder()

@@ -3,6 +3,7 @@ package br.com.postechfiap.medicamentosservice.infraestructure.task;
 import br.com.postechfiap.medicamentosservice.infraestructure.dto.task.EstoqueAlertaDTO;
 import br.com.postechfiap.medicamentosservice.infraestructure.persistance.entities.EstoqueEntity;
 import br.com.postechfiap.medicamentosservice.infraestructure.persistance.repository.EstoqueRepository;
+import br.com.postechfiap.medicamentosservice.infraestructure.producer.NotificacaoProducer;
 import br.com.postechfiap.medicamentosservice.infraestructure.utils.EstoqueAlertaUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -17,6 +18,7 @@ public class EstoqueMonitorTask {
 
     private final EstoqueRepository estoqueRepository;
     private final EstoqueAlertaUtils alertaUtils;
+    private final NotificacaoProducer notificacaoProducer;
 
     @Scheduled(fixedRate = 300000) // 300000 milissegundos = 5 minutos
     public List<EstoqueAlertaDTO> verificarEstoqueBaixo() {
@@ -30,11 +32,9 @@ public class EstoqueMonitorTask {
 
         if (produtosBaixoEstoque.isEmpty()) {
             System.out.println("Nenhum produto encontrado com estoque menor que " + limiteInferior);
-
         } else {
-
-                 listaDeAlertas =  alertaUtils.
-                        converterParaAlertaDTO(produtosBaixoEstoque);
+            listaDeAlertas =  alertaUtils.converterParaAlertaDTO(produtosBaixoEstoque);
+            listaDeAlertas.forEach(notificacaoProducer::enviarNotificacao);
         }
 
         System.out.println("Lista :" + listaDeAlertas);

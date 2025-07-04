@@ -14,7 +14,8 @@ public class EstoqueAlertaDTO {
     private String nomeProduto;
     private String sku;
     private String laboratorio;
-    private int quantidade;
+    private Integer quantidade;
     private LocalDateTime dataAnalise;
+    private String tipoNotificacao;
 
 }
