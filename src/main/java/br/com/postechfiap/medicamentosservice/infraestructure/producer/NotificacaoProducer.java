@@ -16,8 +16,8 @@ public class NotificacaoProducer {
 
     private final ObjectMapper objectMapper;
 
-    @Value("${kafka.topic.pedido}")
-    private String topicoPedido;
+    @Value("${kafka.topic.notificacao}")
+    private String topico;
 
     public NotificacaoProducer(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
@@ -28,19 +28,19 @@ public class NotificacaoProducer {
             String pedidoJson = objectMapper.writeValueAsString(estoqueAlertaDTO);
             System.out.println("➡️ Enviando JSON para o Kafka: " + pedidoJson);
 
-            kafkaTemplate.send(topicoPedido, estoqueAlertaDTO.getSku(), pedidoJson)
+            kafkaTemplate.send(topico, estoqueAlertaDTO.getSku(), pedidoJson)
                     .whenComplete((result, ex) -> {
                         if (ex != null) {
-                            System.out.println("alpha ao enviar pedido para o Kafka: " + ex.getMessage());
-                            throw new ErroDeProcessamentoAlertaException("Erro ao enviar pedido para o Kafka", ex);
+                            System.out.println("alpha ao enviar notificacao para o Kafka: " + ex.getMessage());
+                            throw new ErroDeProcessamentoAlertaException("Erro ao enviar notificacao para o Kafka", ex);
                         }
 
-                        System.out.println("✅ Pedido enviado com sucesso para o Kafka. Offset: "
+                        System.out.println("✅ Notificacao enviado com sucesso para o Kafka. Offset: "
                                 + result.getRecordMetadata().offset());
                     });
         } catch (Exception e) {
             System.err.println("Erro ao serializar o Pedido para JSON: " + e.getMessage());
-            throw new ErroDeProcessamentoAlertaException("Erro ao serializar o Pedido", e);
+            throw new ErroDeProcessamentoAlertaException("Erro ao serializar a Notificacao", e);
         }
     }
 }
