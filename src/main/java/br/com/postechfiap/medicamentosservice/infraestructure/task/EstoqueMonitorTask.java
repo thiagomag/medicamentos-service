@@ -20,7 +20,7 @@ public class EstoqueMonitorTask {
     private final EstoqueAlertaUtils alertaUtils;
     private final NotificacaoProducer notificacaoProducer;
 
-    @Scheduled(fixedRate = 300000) // 300000 milissegundos = 5 minutos
+    @Scheduled(cron = "0 */5 * * * *")
     public List<EstoqueAlertaDTO> verificarEstoqueBaixo() {
 
         System.out.println("--- Executando verificação de estoque baixo ---");
