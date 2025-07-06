@@ -27,6 +27,7 @@ spring:
         request:
           timeout:
             ms: 2000
+    bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
 
 kafka:
   topic:

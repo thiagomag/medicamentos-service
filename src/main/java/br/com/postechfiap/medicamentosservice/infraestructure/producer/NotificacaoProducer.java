@@ -39,7 +39,7 @@ public class NotificacaoProducer {
                                 + result.getRecordMetadata().offset());
                     });
         } catch (Exception e) {
-            System.err.println("Erro ao serializar o Pedido para JSON: " + e.getMessage());
+            System.err.println("Erro ao serializar a Notificação para JSON: " + e.getMessage());
             throw new ErroDeProcessamentoAlertaException("Erro ao serializar a Notificacao", e);
         }
     }
