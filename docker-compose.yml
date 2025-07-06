@@ -13,11 +13,11 @@ services:
       - app-network
 
   estoque-medicamentos-service:
-    image: thiagomag/medicamentos-service:latest
+    image: thiagomag/estoque-medicamentos-service:latest
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: medicamentos-service
+    container_name: estoque-medicamentos-service
     ports:
       - "8082:8082"
     environment:
