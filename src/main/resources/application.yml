@@ -30,7 +30,7 @@ spring:
     bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
 
 client:
-  fornecedor -service:
+  fornecedor-service:
     name: fornecedor-service-client
     url: ${FORNECEDOR_SERVICE_HOST:http://localhost:8080}/api/fornecedor
     api-key: RXN0YSDDqSBhIGFwaS1rZXkgZG8gZm9ybmVjZWRvci1zZXJ2aWNl

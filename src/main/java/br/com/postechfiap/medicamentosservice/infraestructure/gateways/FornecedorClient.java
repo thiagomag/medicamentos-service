@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 @FeignClient(
-        name = "${client.fprnecedor-service.name}",
-        url = "${client.fprnecedor-service.url}",
+        name = "${client.fornecedor-service.name}",
+        url = "${client.fornecedor-service.url}",
         configuration = FornecedorFeignClientConfig.class
 )
 public interface FornecedorClient {

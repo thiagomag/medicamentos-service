@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class FornecedorFeignClientConfig {
 
-    @Value("${client.fornecedor.api-key}")
+    @Value("${client.fornecedor-service.api-key}")
     private String medicamentosServiceApiKey;
 
     @Bean
