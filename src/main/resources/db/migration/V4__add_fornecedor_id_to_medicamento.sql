@@ -1,0 +1,1 @@
+ALTER TABLE public.estoque ADD COLUMN fornecedro_id BIGINT NOT NULL;
