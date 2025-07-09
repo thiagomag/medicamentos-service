@@ -16,9 +16,6 @@ spring:
         locations: classpath:db/migration
         ignore-unknown-database: true
 
-  fornecedor-service:
-    url: http://localhost:8081
-
   kafka:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
@@ -31,6 +28,12 @@ spring:
           timeout:
             ms: 2000
     bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+
+client:
+  fornecedor -service:
+    name: fornecedor-service-client
+    url: ${FORNECEDOR_SERVICE_HOST:http://localhost:8080}/api/fornecedor
+    api-key: RXN0YSDDqSBhIGFwaS1rZXkgZG8gZm9ybmVjZWRvci1zZXJ2aWNl
 
 kafka:
   topic:

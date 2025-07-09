@@ -1,11 +1,16 @@
 package br.com.postechfiap.medicamentosservice.infraestructure.gateways;
 
+import br.com.postechfiap.medicamentosservice.application.configuration.FornecedorFeignClientConfig;
 import br.com.postechfiap.medicamentosservice.infraestructure.dto.fornecedor.FornecedorResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient(name = "fornecedorClient", url = "${fornecedor-service.url}")
+@FeignClient(
+        name = "${client.fprnecedor-service.name}",
+        url = "${client.fprnecedor-service.url}",
+        configuration = FornecedorFeignClientConfig.class
+)
 public interface FornecedorClient {
 
     @GetMapping("/fornecedores/{id}")
