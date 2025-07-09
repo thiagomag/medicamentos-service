@@ -9,9 +9,6 @@ public record MedicamentoRequest(
         @Schema(description = "Princípio(s) ativo(s) do medicamento.", example = "Dipirona Monoidratada, Maleato de Orfenadrina, Cafeína Anidra")
         String principioAtivo,
 
-        @Schema(description = "Nome do laboratório fabricante do medicamento.", example = "Hypera Pharma")
-        String laboratorio,
-
         @Schema(description = "Dosagem do medicamento (ex: '300mg', '10mg/ml').", example = "300mg + 35mg + 50mg")
         String dosagem,
 
@@ -22,6 +19,9 @@ public record MedicamentoRequest(
         Double preco,
 
         @Schema(description = "Quantidade inicial do medicamento a ser adicionada ao estoque.", example = "500")
-        int quantidadeEmEstoque
+        int quantidadeEmEstoque,
+
+        @Schema(description = "ID do fornecedor deste medicamento", example = "123")
+        Long fornecedorId
 ) {
 }

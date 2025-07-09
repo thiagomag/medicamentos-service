@@ -16,6 +16,9 @@ spring:
         locations: classpath:db/migration
         ignore-unknown-database: true
 
+  fornecedor-service:
+    url: http://localhost:8081
+
   kafka:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer

@@ -16,6 +16,7 @@ public class Medicamento  {
     private String sku;
     private String nome;
     private String principioAtivo;
+    private Long fornecedorId;
     private String laboratorio;
     private String dosagem;
     private String descricao;

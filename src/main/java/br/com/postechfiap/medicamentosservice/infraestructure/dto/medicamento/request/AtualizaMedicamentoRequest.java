@@ -9,9 +9,6 @@ public record AtualizaMedicamentoRequest(
         @Schema(description = "Princípio(s) ativo(s) do medicamento", example = "Dipirona Monoidratada, Maleato de Orfenadrina, Cafeína Anidra")
         String principioAtivo,
 
-        @Schema(description = "Laboratório fabricante do medicamento", example = "Hypera Pharma")
-        String laboratorio,
-
         @Schema(description = "Dosagem do medicamento", example = "300mg + 35mg + 50mg")
         String dosagem,
 
@@ -19,6 +16,9 @@ public record AtualizaMedicamentoRequest(
         String descricao,
 
         @Schema(description = "Preço de venda do medicamento", example = "15.99", format = "double")
-        Double preco
+        Double preco,
+
+        @Schema(description = "ID do fornecedor deste medicamento", example = "123")
+        Long fornecedorId
 ) {
 }
