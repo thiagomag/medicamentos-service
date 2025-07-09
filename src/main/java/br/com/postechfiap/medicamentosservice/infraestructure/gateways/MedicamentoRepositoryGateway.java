@@ -35,7 +35,8 @@ public class MedicamentoRepositoryGateway implements MedicamentoGateway {
 
     @Override
     public void delete(MedicamentoEntity entity) {
-        repository.delete(entity);
+        entity.delete();
+        repository.save(entity);
     }
 
     @Override
@@ -47,5 +48,15 @@ public class MedicamentoRepositoryGateway implements MedicamentoGateway {
     public MedicamentoEntity update(MedicamentoEntity entity) {
         entity.setUpdatedAt(LocalDateTime.now());
         return  repository.save(entity);
+    }
+
+    @Override
+    public List<MedicamentoEntity> findByRequestParams(String nomeMedicamento, String sku, String principioAtivo, String laboratorio) {
+        return repository.findByRequestParams(nomeMedicamento, sku, principioAtivo, laboratorio);
+    }
+
+    @Override
+    public Optional<MedicamentoEntity> findBySku(String sku) {
+        return repository.findBySku(sku);
     }
 }

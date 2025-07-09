@@ -1,7 +1,5 @@
 package br.com.postechfiap.medicamentosservice.domain.entities;
 
-import br.com.postechfiap.medicamentosservice.infraestructure.persistance.entities.BaseEntity;
-import jakarta.persistence.*;
 import lombok.*;
 
 @Builder

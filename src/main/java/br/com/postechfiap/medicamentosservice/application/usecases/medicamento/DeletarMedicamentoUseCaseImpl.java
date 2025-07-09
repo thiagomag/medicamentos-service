@@ -1,7 +1,7 @@
 package br.com.postechfiap.medicamentosservice.application.usecases.medicamento;
 
+import br.com.postechfiap.medicamentosservice.application.gateways.MedicamentoGateway;
 import br.com.postechfiap.medicamentosservice.infraestructure.exceptions.medicamento.MedicamentoNotFoundException;
-import br.com.postechfiap.medicamentosservice.infraestructure.persistance.repository.MedicamentoRepository;
 import br.com.postechfiap.medicamentosservice.application.interfaces.usecases.medicamento.DeletarMedicamentoUseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,14 +12,13 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class DeletarMedicamentoUseCaseImpl implements DeletarMedicamentoUseCase {
 
-    private final MedicamentoRepository medicamentoRepository;
+    private final MedicamentoGateway medicamentoGateway;
 
     @Override
     public String execute(Long medicamentoId) {
-        final var medicamentoDb = medicamentoRepository.findById(medicamentoId)
+        final var medicamentoDb = medicamentoGateway.findById(medicamentoId)
                 .orElseThrow(MedicamentoNotFoundException::new);
-        medicamentoDb.delete();
-        medicamentoRepository.save(medicamentoDb);
+        medicamentoGateway.delete(medicamentoDb);
         return medicamentoDb.getSku();
     }
 }

@@ -1,5 +1,6 @@
 package br.com.postechfiap.medicamentosservice.application.usecases.medicamento;
 
+import br.com.postechfiap.medicamentosservice.application.gateways.MedicamentoGateway;
 import br.com.postechfiap.medicamentosservice.infraestructure.adapter.medicamento.MedicamentoResponseAdapter;
 import br.com.postechfiap.medicamentosservice.infraestructure.adapter.medicamento.MedicamentoAdapter;
 import br.com.postechfiap.medicamentosservice.infraestructure.dto.fornecedor.FornecedorResponse;
@@ -8,7 +9,6 @@ import br.com.postechfiap.medicamentosservice.infraestructure.dto.medicamento.re
 import br.com.postechfiap.medicamentosservice.infraestructure.exceptions.fornecedor.FornecedorNotFoundException;
 import br.com.postechfiap.medicamentosservice.infraestructure.gateways.FornecedorClient;
 import br.com.postechfiap.medicamentosservice.infraestructure.persistance.entities.MedicamentoEntity;
-import br.com.postechfiap.medicamentosservice.infraestructure.persistance.repository.MedicamentoRepository;
 import br.com.postechfiap.medicamentosservice.application.interfaces.usecases.medicamento.CadastrarMedicamentoUseCase;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +22,7 @@ public class CadastrarMedicamentoUseCaseImpl implements CadastrarMedicamentoUseC
 
     private final MedicamentoAdapter medicamentoAdapter;
     private final MedicamentoResponseAdapter medicamentoResponseAdapter;
-    private final MedicamentoRepository medicamentoRepository;
+    private final MedicamentoGateway medicamentoGateway;
 
     private final FornecedorClient fornecedorClient;
 
@@ -43,7 +43,7 @@ public class CadastrarMedicamentoUseCaseImpl implements CadastrarMedicamentoUseC
 
         medicamento.gerarSku();
 
-        final var medicamentoSalvo = medicamentoRepository.save(medicamento);
+        final var medicamentoSalvo = medicamentoGateway.save(medicamento);
         // Transforma Entity em DTO response
         MedicamentoResponse response = medicamentoResponseAdapter.adapt(medicamentoSalvo);
 

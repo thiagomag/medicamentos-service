@@ -1,9 +1,9 @@
 package br.com.postechfiap.medicamentosservice.infraestructure.utils;
 
+import br.com.postechfiap.medicamentosservice.application.gateways.MedicamentoGateway;
 import br.com.postechfiap.medicamentosservice.infraestructure.dto.task.EstoqueAlertaDTO;
 import br.com.postechfiap.medicamentosservice.infraestructure.persistance.entities.EstoqueEntity;
 import br.com.postechfiap.medicamentosservice.infraestructure.persistance.entities.MedicamentoEntity;
-import br.com.postechfiap.medicamentosservice.infraestructure.persistance.repository.MedicamentoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class EstoqueAlertaUtils {
 
-    private final MedicamentoRepository repository;
+    private final MedicamentoGateway medicamentoGateway;
 
     public  List<EstoqueAlertaDTO> converterParaAlertaDTO(List<EstoqueEntity> estoqueEntities) {
 
@@ -25,7 +25,7 @@ public class EstoqueAlertaUtils {
                     String laboratorio = "Laboratório não informado"; // Valor padrão seguro
 
 
-                    Optional<MedicamentoEntity> medicamentoOptional = repository.findBySku(entity.getSku());
+                    Optional<MedicamentoEntity> medicamentoOptional = medicamentoGateway.findBySku(entity.getSku());
 
 
                     if (medicamentoOptional.isPresent()) {

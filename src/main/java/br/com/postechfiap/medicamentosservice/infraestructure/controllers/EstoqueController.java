@@ -24,6 +24,7 @@ public class EstoqueController {
     private final BuscarEstoquePorNomeUseCase buscarEstoquePorNome;
     private final ReduzirEstoqueUseCase reduzirEstoque;
     private final AdicionarEstoqueUseCase adicionarEstoque;
+    private final AtualizarReposicaoPendenteUseCase atualizarReposicaoPendente;
 
 
     @GetMapping("/BuscaSku")
@@ -52,8 +53,7 @@ public class EstoqueController {
 
     @PutMapping("/reduzir")
     @Operation(summary = "Reduzir o Estoque", description = "Reduzir o estoque com a sku")
-    public  ResponseEntity<EstoqueResponse> reduzirEstoque(
-                                                           @RequestBody AlterarEstoqueRequest request) {
+    public  ResponseEntity<EstoqueResponse> reduzirEstoque(@RequestBody AlterarEstoqueRequest request) {
 
         var novoEstoque = reduzirEstoque.execute(request);
         return  ResponseEntity.ok(novoEstoque);
@@ -61,43 +61,15 @@ public class EstoqueController {
 
     @PutMapping("/adicionar")
     @Operation(summary = "Adicionar o Estoque", description = "Adicionar o esto com a sku")
-    public  ResponseEntity<EstoqueResponse> adicionarEstoque(
-                                                           @Valid @RequestBody AlterarEstoqueRequest request) {
+    public  ResponseEntity<EstoqueResponse> adicionarEstoque(@Valid @RequestBody AlterarEstoqueRequest request) {
 
         var novoEstoque = adicionarEstoque.execute(request);
         return  ResponseEntity.ok(novoEstoque);
     }
 
-
-
-    //    @PostMapping
-//    @Operation(summary = "Cadastra estoque", description = "Cadastra novo estoque")
-//    public ResponseEntity<EstoqueResponse> create(@Valid @RequestBody EstoqueRequest estoqueRequest) {
-//        var novoEstoque = cadastrarEstoque.execute(estoqueRequest);
-//
-//        URI location = ServletUriComponentsBuilder
-//                .fromCurrentRequest()
-//                .path("/{id}")
-//                .buildAndExpand(novoEstoque.id())
-//                .toUri();
-//        return ResponseEntity.created(location).body(novoEstoque);
-//    }
-//    @DeleteMapping("/{sku}")
-//    @Operation(summary = "Deleta um Estoque", description = "Deleta um item do estoque")
-//    public ResponseEntity<String> delete(@PathVariable String sku) {
-//        String mensagem =deletarEstoque.execute(sku);
-//        return ResponseEntity.ok(mensagem);
-//    }
-
-//    @PutMapping("/{sku}")
-//    @Operation(summary = "Atualiza o Estoque", description = "Atualiza o estoque com a sku")
-//    public ResponseEntity<EstoqueResponse> atualizarEstoque(@PathVariable String sku,
-//                                                            @Valid @RequestBody EstoqueRequest estoqueRequest
-//    ) {
-//        var novoEstoque = atualizarEstoque.execute(new AtualizarEstoqueDto(sku, estoqueRequest));
-//        return  ResponseEntity.ok(novoEstoque);
-//    }
-
-
-
+    @PutMapping("/reposicao-pendente/{sku}")
+    @Operation(summary = "Atualizar Reposição Pendente", description = "Atualiza o status de reposição pendente do estoque")
+    public ResponseEntity<Void> atualizarReposicaoPendente(@PathVariable String sku) {
+        return ResponseEntity.ok(atualizarReposicaoPendente.execute(sku));
+    }
 }
