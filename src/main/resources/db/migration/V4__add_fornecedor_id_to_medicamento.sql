@@ -1,1 +1,1 @@
-ALTER TABLE public.medicamento ADD COLUMN fornecedro_id BIGINT;
+ALTER TABLE public.medicamento ADD COLUMN fornecedor_id BIGINT;
