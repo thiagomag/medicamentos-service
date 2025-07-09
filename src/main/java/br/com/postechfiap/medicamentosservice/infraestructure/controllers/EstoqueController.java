@@ -69,7 +69,7 @@ public class EstoqueController {
 
     @PutMapping("/reposicao-pendente/{sku}")
     @Operation(summary = "Atualizar Reposição Pendente", description = "Atualiza o status de reposição pendente do estoque")
-    public ResponseEntity<Void> atualizarReposicaoPendente(@RequestParam String sku) {
+    public ResponseEntity<Void> atualizarReposicaoPendente(@PathVariable String sku) {
         return ResponseEntity.ok(atualizarReposicaoPendente.execute(sku));
     }
 }
