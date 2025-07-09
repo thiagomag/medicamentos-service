@@ -24,6 +24,7 @@ public class EstoqueController {
     private final BuscarEstoquePorNomeUseCase buscarEstoquePorNome;
     private final ReduzirEstoqueUseCase reduzirEstoque;
     private final AdicionarEstoqueUseCase adicionarEstoque;
+    private final AtualizarReposicaoPendenteUseCase atualizarReposicaoPendente;
 
 
     @GetMapping("/BuscaSku")
@@ -64,5 +65,11 @@ public class EstoqueController {
 
         var novoEstoque = adicionarEstoque.execute(request);
         return  ResponseEntity.ok(novoEstoque);
+    }
+
+    @PutMapping("/reposicao-pendente/{sku}")
+    @Operation(summary = "Atualizar Reposição Pendente", description = "Atualiza o status de reposição pendente do estoque")
+    public ResponseEntity<Void> atualizarReposicaoPendente(@RequestParam String sku) {
+        return ResponseEntity.ok(atualizarReposicaoPendente.execute(sku));
     }
 }
