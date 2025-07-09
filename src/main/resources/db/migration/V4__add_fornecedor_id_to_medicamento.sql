@@ -1,1 +1,1 @@
-ALTER TABLE public.estoque ADD COLUMN fornecedro_id BIGINT NOT NULL;
+ALTER TABLE public.medicamento ADD COLUMN fornecedro_id BIGINT;
