@@ -1,0 +1,1 @@
+ALTER TABLE public.estoque ADD COLUMN reposicao_pendente BOOLEAN NOT NULL DEFAULT false;

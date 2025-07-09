@@ -1,8 +1,8 @@
 package br.com.postechfiap.medicamentosservice.infraestructure.task;
 
+import br.com.postechfiap.medicamentosservice.application.gateways.EstoqueGateway;
 import br.com.postechfiap.medicamentosservice.infraestructure.dto.task.EstoqueAlertaDTO;
 import br.com.postechfiap.medicamentosservice.infraestructure.persistance.entities.EstoqueEntity;
-import br.com.postechfiap.medicamentosservice.infraestructure.persistance.repository.EstoqueRepository;
 import br.com.postechfiap.medicamentosservice.infraestructure.producer.NotificacaoProducer;
 import br.com.postechfiap.medicamentosservice.infraestructure.utils.EstoqueAlertaUtils;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class EstoqueMonitorTask {
 
-    private final EstoqueRepository estoqueRepository;
+    private final EstoqueGateway estoqueGateway;
     private final EstoqueAlertaUtils alertaUtils;
     private final NotificacaoProducer notificacaoProducer;
 
@@ -28,7 +28,7 @@ public class EstoqueMonitorTask {
        int limiteInferior = 5;
         List<EstoqueAlertaDTO> listaDeAlertas = Collections.emptyList();
 
-       List<EstoqueEntity> produtosBaixoEstoque = estoqueRepository.findByQuantidadeLessThan(limiteInferior);
+       List<EstoqueEntity> produtosBaixoEstoque = estoqueGateway.findByQuantidadeLessThan(limiteInferior);
 
         if (produtosBaixoEstoque.isEmpty()) {
             System.out.println("Nenhum produto encontrado com estoque menor que " + limiteInferior);

@@ -7,11 +7,12 @@ import lombok.*;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Estoque  {
+public class Estoque {
 
     private Long id;
     private String nome;
     private String sku;
-    private int quantidade;
+    private Boolean quantidade;
+    private Boolean reposicaoPendente;
 
 }

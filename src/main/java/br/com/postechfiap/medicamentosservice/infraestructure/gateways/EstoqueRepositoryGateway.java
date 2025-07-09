@@ -14,38 +14,58 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class EstoqueRepositoryGateway implements EstoqueGateway {
 
-   private final EstoqueRepository repository;
+   private final EstoqueRepository estoqueRepository;
 
     @Override
     public EstoqueEntity save(EstoqueEntity entity) {
         entity.setCreatedAt(LocalDateTime.now());
-        return repository.save(entity) ;
+        return estoqueRepository.save(entity) ;
     }
 
     @Override
     public List<EstoqueEntity> findAll() {
-        return repository.findAll();
+        return estoqueRepository.findAll();
     }
 
     @Override
     public Optional<EstoqueEntity> findById(Long id) {
-        return repository.findById(id);
+        return estoqueRepository.findById(id);
     }
 
     @Override
     public void delete(EstoqueEntity entity) {
-        repository.delete(entity);
-
+        entity.delete();
+        estoqueRepository.save(entity);
     }
 
     @Override
     public boolean existsById(Long id) {
-        return repository.existsById(id);
+        return estoqueRepository.existsById(id);
     }
 
     @Override
     public EstoqueEntity update(EstoqueEntity entity) {
         entity.setUpdatedAt(LocalDateTime.now());
-        return  repository.save(entity);
+        return  estoqueRepository.save(entity);
+    }
+
+    @Override
+    public List<EstoqueEntity> findByNomeContainingIgnoreCase(String nome) {
+        return estoqueRepository.findByNomeContainingIgnoreCase(nome);
+    }
+
+    @Override
+    public Optional<EstoqueEntity> findBySku(String sku) {
+        return estoqueRepository.findBySku(sku);
+    }
+
+    @Override
+    public List<EstoqueEntity> findByNomeContainingIgnoreCaseOrSkuIgnoreCase(String nome, String sku) {
+        return estoqueRepository.findByNomeContainingIgnoreCaseOrSkuIgnoreCase(nome, sku);
+    }
+
+    @Override
+    public List<EstoqueEntity> findByQuantidadeLessThan(int quantidade) {
+        return estoqueRepository.findByQuantidadeLessThanAndReposicaoPendenteIsFalse(quantidade);
     }
 }

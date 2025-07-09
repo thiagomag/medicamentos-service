@@ -30,6 +30,11 @@ public class EstoqueEntity extends BaseEntity<Long> {
 
     @Setter
     @Column(nullable = false)
-    private int quantidade;
+    private Integer quantidade;
+
+    @Setter
+    @Builder.Default
+    @Column(name = "reposicao_pendente", nullable = false)
+    private Boolean reposicaoPendente = false;
 
 }

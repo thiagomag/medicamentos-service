@@ -1,10 +1,10 @@
 package br.com.postechfiap.medicamentosservice.application.usecases.estoque;
 
+import br.com.postechfiap.medicamentosservice.application.gateways.EstoqueGateway;
 import br.com.postechfiap.medicamentosservice.infraestructure.dto.estoque.request.AlterarEstoqueRequest;
 import br.com.postechfiap.medicamentosservice.infraestructure.dto.estoque.response.EstoqueResponse;
 import br.com.postechfiap.medicamentosservice.infraestructure.exceptions.estoque.EstoqueInsuficienteException;
 import br.com.postechfiap.medicamentosservice.infraestructure.exceptions.estoque.EstoqueNotFoundException;
-import br.com.postechfiap.medicamentosservice.infraestructure.persistance.repository.EstoqueRepository;
 import br.com.postechfiap.medicamentosservice.application.interfaces.usecases.estoque.ReduzirEstoqueUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,12 +13,12 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class ReduzirEstoqueUseCaseImpl implements ReduzirEstoqueUseCase {
 
-    private final EstoqueRepository estoqueRepository;
+    private final EstoqueGateway estoqueGateway;
 
     @Override
     public EstoqueResponse execute (AlterarEstoqueRequest entry){
 
-        var estoque = estoqueRepository.findBySku(entry.sku())
+        var estoque = estoqueGateway.findBySku(entry.sku())
                 .orElseThrow(EstoqueNotFoundException::new);
 
         if(estoque.getQuantidade() < entry.quantidade()){
@@ -29,13 +29,14 @@ public class ReduzirEstoqueUseCaseImpl implements ReduzirEstoqueUseCase {
         int quantidade= estoque.getQuantidade() - entry.quantidade();
         estoque.setQuantidade(quantidade);
 
-        estoqueRepository.save(estoque);
+        estoqueGateway.save(estoque);
 
         return new EstoqueResponse(
                 estoque.getId(),
                 estoque.getNome(),
                 estoque.getSku(),
-                estoque.getQuantidade()
+                estoque.getQuantidade(),
+                estoque.getReposicaoPendente()
         );
     }
 }

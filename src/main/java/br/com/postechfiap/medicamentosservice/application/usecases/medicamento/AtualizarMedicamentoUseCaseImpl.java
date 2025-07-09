@@ -1,14 +1,13 @@
 package br.com.postechfiap.medicamentosservice.application.usecases.medicamento;
 
-import br.com.postechfiap.medicamentosservice.infraestructure.adapter.medicamento.MedicamentoResponseAdapter;
+import br.com.postechfiap.medicamentosservice.application.gateways.MedicamentoGateway;
+import br.com.postechfiap.medicamentosservice.application.interfaces.usecases.medicamento.AtualizarMedicamentoUseCase;
 import br.com.postechfiap.medicamentosservice.infraestructure.adapter.medicamento.MedicamentoAdapter;
+import br.com.postechfiap.medicamentosservice.infraestructure.adapter.medicamento.MedicamentoResponseAdapter;
 import br.com.postechfiap.medicamentosservice.infraestructure.dto.medicamento.request.AtualizaMedicamentoRequest;
-import br.com.postechfiap.medicamentosservice.infraestructure.dto.medicamento.request.MedicamentoRequest;
 import br.com.postechfiap.medicamentosservice.infraestructure.dto.medicamento.response.MedicamentoResponse;
 import br.com.postechfiap.medicamentosservice.infraestructure.exceptions.medicamento.MedicamentoNotFoundException;
 import br.com.postechfiap.medicamentosservice.infraestructure.persistance.entities.MedicamentoEntity;
-import br.com.postechfiap.medicamentosservice.infraestructure.persistance.repository.MedicamentoRepository;
-import br.com.postechfiap.medicamentosservice.application.interfaces.usecases.medicamento.AtualizarMedicamentoUseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -21,13 +20,13 @@ public class AtualizarMedicamentoUseCaseImpl implements AtualizarMedicamentoUseC
 
     private final MedicamentoAdapter medicamentoAdapter;
     private final MedicamentoResponseAdapter medicamentoResponseAdapter;
-    private final MedicamentoRepository medicamentoRepository;
+    private final MedicamentoGateway medicamentoGateway;
 
     @Override
     public Tuple<MedicamentoResponse,String> execute(Tuple<AtualizaMedicamentoRequest, Long> medicamentoRequestLongTuple) {
         final var request = medicamentoRequestLongTuple._1();
         final var medicamentoId = medicamentoRequestLongTuple._2();
-        final var medicamentoDb = medicamentoRepository.findById(medicamentoId)
+        final var medicamentoDb = medicamentoGateway.findById(medicamentoId)
                 .orElseThrow(MedicamentoNotFoundException::new);
 
         final String skuAntigo = medicamentoDb.getSku();
@@ -39,7 +38,7 @@ public class AtualizarMedicamentoUseCaseImpl implements AtualizarMedicamentoUseC
                 .dosagem(request.dosagem()).descricao(request.descricao()).preco(request.preco()).build();
         medicamentoAtualizado.gerarSku();
 
-        medicamentoRepository.save(medicamentoAtualizado);
+        medicamentoGateway.save(medicamentoAtualizado);
         var response =  medicamentoResponseAdapter.adapt(medicamentoAtualizado);
 
 
