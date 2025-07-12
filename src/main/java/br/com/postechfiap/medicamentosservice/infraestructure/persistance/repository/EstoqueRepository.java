@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface EstoqueRepository extends JpaRepository<EstoqueEntity, Long> {
     List<EstoqueEntity> findByNomeContainingIgnoreCase(String nome);
-    Optional<EstoqueEntity> findBySku(String sku);
+    Optional<EstoqueEntity> findBySkuIgnoreCaseAndDeletedTmspIsNull(String sku);
     List<EstoqueEntity> findByNomeContainingIgnoreCaseOrSkuIgnoreCase(String nome, String sku);
     List<EstoqueEntity> findByQuantidadeLessThanAndReposicaoPendenteIsFalse(Integer quantidadeIsLessThan);
 }

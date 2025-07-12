@@ -2,6 +2,7 @@ package br.com.postechfiap.medicamentosservice.application.usecases.estoque;
 
 import br.com.postechfiap.medicamentosservice.application.gateways.EstoqueGateway;
 import br.com.postechfiap.medicamentosservice.application.interfaces.usecases.estoque.AtualizarReposicaoPendenteUseCase;
+import br.com.postechfiap.medicamentosservice.infraestructure.exceptions.estoque.EstoqueNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ public class AtualizarReposicaoPendenteUseCaseImpl implements AtualizarReposicao
     @Override
     public Void execute(String sku) {
         final var estoque = estoqueGateway.findBySku(sku)
-                .orElseThrow(() -> new RuntimeException("Estoque not found for SKU: " + sku));
+                .orElseThrow(EstoqueNotFoundException::new);
         estoque.setReposicaoPendente(Boolean.TRUE);
         estoqueGateway.update(estoque);
         return null;

@@ -56,7 +56,7 @@ public class EstoqueRepositoryGateway implements EstoqueGateway {
 
     @Override
     public Optional<EstoqueEntity> findBySku(String sku) {
-        return estoqueRepository.findBySku(sku);
+        return estoqueRepository.findBySkuIgnoreCaseAndDeletedTmspIsNull(sku);
     }
 
     @Override
