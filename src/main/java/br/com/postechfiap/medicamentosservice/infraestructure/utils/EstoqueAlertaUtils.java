@@ -22,21 +22,14 @@ public class EstoqueAlertaUtils {
 
         return estoqueEntities.stream()
                 .map(entity -> {
-                    String laboratorio = "Laboratório não informado"; // Valor padrão seguro
-
 
                     Optional<MedicamentoEntity> medicamentoOptional = medicamentoGateway.findBySku(entity.getSku());
 
-
-                    if (medicamentoOptional.isPresent()) {
-                        laboratorio = medicamentoOptional.get().getLaboratorio();
-                    }
-
-                    // Constrói e retorna o DTO
                     return EstoqueAlertaDTO.builder()
                             .nomeProduto(entity.getNome())
                             .sku(entity.getSku())
-                            .laboratorio(laboratorio)
+                            .laboratorio(medicamentoOptional.map(MedicamentoEntity::getLaboratorio).orElse(null))
+                            .laboratorioId(medicamentoOptional.map(MedicamentoEntity::getFornecedorId).orElse(null))
                             .quantidade(entity.getQuantidade())
                             .dataAnalise(LocalDateTime.now())
                             .build();
