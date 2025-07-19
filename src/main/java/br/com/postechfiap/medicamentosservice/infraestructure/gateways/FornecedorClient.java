@@ -13,6 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 )
 public interface FornecedorClient {
 
-    @GetMapping("/fornecedores/{id}")
+    @GetMapping("/fornecedores/buscar/{id}")
     FornecedorResponse buscarFornecedorPorId(@PathVariable("id") Long id);
 }
