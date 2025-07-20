@@ -22,6 +22,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -47,6 +48,7 @@ public class MedicamentosController {
     private final BuscarEstoquePorSkuUseCase buscarEstoqueUseCase;
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
     @Operation(summary = "Cadastrar Medicamento e Criar Estoque", description = "Cadastra novos medicamentos e estoque.")
     public ResponseEntity<MedicamentoResponse> cadastrarNovoMedicamento(@RequestBody @Valid MedicamentoRequest dto) {
 
@@ -70,6 +72,7 @@ public class MedicamentosController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR', 'ROLE_MEDIC', 'ROLE_NURSE')")
     @Operation(summary = "Buscar Medicamento", description = "Buscar medicamento por nome ou sku")
     public ResponseEntity<List<MedicamentoResponse>> buscarMedicamento(@RequestParam(required = false) String nomeMedicamento,
                                                                        @RequestParam(required = false) String sku,
@@ -125,6 +128,7 @@ public class MedicamentosController {
 
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
     @Operation(summary = "Deletar Medicamento", description = "Remove um medicamento pelo ID e retorna uma mensagem de confirmação.")
     public ResponseEntity<String> deletarMedicamento(@PathVariable Long id) {
 

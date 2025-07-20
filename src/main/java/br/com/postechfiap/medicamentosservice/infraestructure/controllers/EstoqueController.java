@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +29,7 @@ public class EstoqueController {
 
 
     @GetMapping("/BuscaSku")
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR', 'ROLE_MEDIC', 'ROLE_NURSE')")
     @Operation(summary = "Busca Estoque por SKU", description = "Busca Estoque por Nome")
     public ResponseEntity<ListaEstoqueResponse> buscarEstoque(@RequestParam String sku) {
         if(sku == null || sku.trim().isEmpty()){
@@ -40,6 +42,7 @@ public class EstoqueController {
     }
 
     @GetMapping("/BuscaNome")
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR', 'ROLE_MEDIC', 'ROLE_NURSE')")
     @Operation(summary = "Busca Estoque por Nome", description = "Busca Estoque por Nome")
     public ResponseEntity<ListaEstoqueResponse> buscarEstoquePorNome(@RequestParam String nome) {
         if(nome == null || nome.trim().isEmpty()){
@@ -52,6 +55,7 @@ public class EstoqueController {
     }
 
     @PutMapping("/reduzir")
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR', 'ROLE_MEDIC')")
     @Operation(summary = "Reduzir o Estoque", description = "Reduzir o estoque com a sku")
     public  ResponseEntity<EstoqueResponse> reduzirEstoque(@RequestBody AlterarEstoqueRequest request) {
 
@@ -60,6 +64,7 @@ public class EstoqueController {
     }
 
     @PutMapping("/adicionar")
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
     @Operation(summary = "Adicionar o Estoque", description = "Adicionar o esto com a sku")
     public  ResponseEntity<EstoqueResponse> adicionarEstoque(@Valid @RequestBody AlterarEstoqueRequest request) {
 
@@ -68,6 +73,7 @@ public class EstoqueController {
     }
 
     @PutMapping("/reposicao-pendente/{sku}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
     @Operation(summary = "Atualizar Reposição Pendente", description = "Atualiza o status de reposição pendente do estoque")
     public ResponseEntity<Void> atualizarReposicaoPendente(@PathVariable String sku) {
         return ResponseEntity.ok(atualizarReposicaoPendente.execute(sku));
