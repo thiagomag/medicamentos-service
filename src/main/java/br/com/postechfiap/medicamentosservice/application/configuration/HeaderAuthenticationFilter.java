@@ -27,7 +27,6 @@ public class HeaderAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
 
         String rolesHeader = request.getHeader(ROLES_HEADER);
-        final var names = request.getHeaderNames();
 
         if (rolesHeader == null || rolesHeader.isEmpty()) {
             log.debug("Header '{}' não encontrado. A prosseguir sem criar contexto.", ROLES_HEADER);
